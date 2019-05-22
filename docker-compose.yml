@@ -1,0 +1,23 @@
+version: '3.7'
+
+services:
+
+  nginx:
+    build:
+      context: ./services/nginx
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 8000:80
+    depends_on:
+      - restaurants
+
+  restaurants: 
+    restart: always
+    build:
+      context: ./services/restaurants
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8000"
+    volumes:
+      - './restaurants:/usr/src/app'
